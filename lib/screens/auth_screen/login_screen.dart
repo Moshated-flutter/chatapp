@@ -1,7 +1,8 @@
-import 'dart:math' as math;
+import 'package:chatapp/screens/auth_screen/components/login_content.dart';
 import 'package:chatapp/screens/auth_screen/login_background.dart/bottombackground.dart';
 import 'package:chatapp/screens/auth_screen/login_background.dart/center/centerbackground.dart';
 import 'package:chatapp/screens/auth_screen/login_background.dart/topbackground.dart';
+import 'package:chatapp/utils/constrans.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,10 +26,11 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Positioned(
             child: bottombackgroun(screensize.width),
-            bottom: -180,
+            top: 450,
             left: -30,
           ),
           Centerwidget(size: screensize),
+          Logincontent(),
         ],
       ),
     );

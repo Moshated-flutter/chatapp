@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: kbackground,
           textTheme:
               Theme.of(context).textTheme.apply(bodyColor: kprimarcolors),
+          fontFamily: 'Montserrat',
           cardColor: Colors.grey[100]),
       // home: FutureBuilder(
       //   future: Firebase.initializeApp(),
