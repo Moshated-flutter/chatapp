@@ -1,5 +1,7 @@
 import 'package:chatapp/screens/auth_screen/login_screen.dart';
+import 'package:chatapp/screens/loadingScreen.dart';
 import 'package:chatapp/utils/constrans.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
@@ -23,19 +25,20 @@ class MyApp extends StatelessWidget {
               Theme.of(context).textTheme.apply(bodyColor: kprimarcolors),
           fontFamily: 'Montserrat',
           cardColor: Colors.grey[100]),
-      // home: FutureBuilder(
-      //   future: Firebase.initializeApp(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return LoadingScreen();
-      //     }
-      //     if (snapshot.connectionState == ConnectionState.done) {
-      //       return ChatScreen();
-      //     }
-      //     return LoadingScreen();
-      //   },
-      // ),
-      home: LoginScreen(),
+      home: FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return LoginScreen(isloading: false);
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return LoginScreen(
+              isloading: true,
+            );
+          }
+          return LoadingScreen();
+        },
+      ),
     );
   }
 }

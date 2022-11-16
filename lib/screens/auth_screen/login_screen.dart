@@ -8,16 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  var isloading = true;
+  LoginScreen({required this.isloading, super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final auth = FirebaseAuth.instance;
-  void _subimitAuthData(String email, String password, String username,
-      bool isLogin, BuildContext ctx) async {
+  void _subimitAuthData(
+    String email,
+    String password,
+    String username,
+    bool isLogin,
+    BuildContext ctx,
+  ) async {
+    final auth = FirebaseAuth.instance;
     late var authresult;
     try {
       if (isLogin) {
@@ -61,10 +67,15 @@ class _LoginScreenState extends State<LoginScreen> {
             top: 450,
             left: -30,
           ),
-          Centerwidget(size: screensize),
-          Logincontent(
-            submit: _subimitAuthData,
-          ),
+          if (widget.isloading) Centerwidget(size: screensize),
+          if (widget.isloading)
+            Logincontent(
+              submit: _subimitAuthData,
+            ),
+          if (!widget.isloading)
+            Center(
+              child: CircularProgressIndicator(),
+            )
         ],
       ),
     );
