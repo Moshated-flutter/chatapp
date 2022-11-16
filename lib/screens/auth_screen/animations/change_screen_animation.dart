@@ -35,31 +35,31 @@ class ChangeScreenAnimations {
   }) {
     toptextconroller = AnimationController(
       vsync: vsync,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
     );
     toptextanimations = _createanimation(
       begin: Offset.zero,
-      end: Offset(-1.8, 0),
+      end: const Offset(-1.8, 0),
       parent: toptextconroller,
     );
     bottomtextconroller = AnimationController(
       vsync: vsync,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
     );
     bottomtextanimations = _createanimation(
       begin: Offset.zero,
-      end: Offset(0, 1.7),
+      end: const Offset(0, 1.7),
       parent: bottomtextconroller,
     );
     for (var i = 0; i < createaccontItems; i++) {
       createaccountController.add(AnimationController(
         vsync: vsync,
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
       ));
       createAccountAnimation.add(
         _createanimation(
           begin: Offset.zero,
-          end: Offset(-1, 0),
+          end: const Offset(-1, 0),
           parent: createaccountController[i],
         ),
       );
@@ -67,11 +67,11 @@ class ChangeScreenAnimations {
     for (var i = 0; i < loginitem; i++) {
       loginController.add(AnimationController(
         vsync: vsync,
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
       ));
       loginAnimation.add(
         _createanimation(
-          begin: Offset(1, 0),
+          begin: const Offset(1, 0),
           end: Offset.zero,
           parent: loginController[i],
         ),
@@ -96,7 +96,7 @@ class ChangeScreenAnimations {
     await bottomtextconroller.forward();
     for (final controller in [...createaccountController, ...loginController]) {
       controller.forward();
-      await Future.delayed(Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 50));
     }
 
     bottomtextconroller.reverse();
@@ -114,7 +114,7 @@ class ChangeScreenAnimations {
       ...createaccountController.reversed,
     ]) {
       controller.reverse();
-      await Future.delayed(Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 50));
     }
 
     bottomtextconroller.reverse();
