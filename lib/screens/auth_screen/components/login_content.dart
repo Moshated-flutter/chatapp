@@ -11,7 +11,10 @@ enum Screens {
 }
 
 class Logincontent extends StatefulWidget {
-  const Logincontent({super.key});
+  final void Function(String email, String password, String username,
+      bool islogin, BuildContext ctx) submit;
+
+  Logincontent({required this.submit, super.key});
 
   @override
   State<Logincontent> createState() => _LogincontentState();
@@ -227,9 +230,8 @@ class _LogincontentState extends State<Logincontent>
               formkeyEmialSign.currentState!.save();
               formkeyPasswordSing.currentState!.save();
               formkeyUser.currentState!.save();
-              print(_useremail);
-              print(_userpassword);
-              print(_username);
+              widget.submit(
+                  _useremail, _userpassword, _username, false, context);
             }
           }
           if (ChangeScreenAnimations.currentScreen == Screens.login) {
@@ -238,6 +240,8 @@ class _LogincontentState extends State<Logincontent>
             if (emailvalid && passvalid) {
               formkeyEmialLog.currentState!.save();
               formkeyPasswordLog.currentState!.save();
+              widget.submit(
+                  _useremail, _userpassword, _username, true, context);
             }
           }
         },

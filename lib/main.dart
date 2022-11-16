@@ -1,8 +1,6 @@
 import 'package:chatapp/screens/auth_screen/login_screen.dart';
-import 'package:chatapp/screens/chatScreen.dart';
-import 'package:chatapp/screens/loadingScreen.dart';
 import 'package:chatapp/utils/constrans.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {

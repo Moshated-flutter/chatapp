@@ -2,8 +2,10 @@ import 'package:chatapp/screens/auth_screen/components/login_content.dart';
 import 'package:chatapp/screens/auth_screen/login_background.dart/bottombackground.dart';
 import 'package:chatapp/screens/auth_screen/login_background.dart/center/centerbackground.dart';
 import 'package:chatapp/screens/auth_screen/login_background.dart/topbackground.dart';
-import 'package:chatapp/utils/constrans.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +15,36 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final auth = FirebaseAuth.instance;
+  void _subimitAuthData(String email, String password, String username,
+      bool isLogin, BuildContext ctx) async {
+    late var authresult;
+    try {
+      if (isLogin) {
+        authresult = await auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+      } else {
+        authresult = await auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+      }
+    } on PlatformException catch (err) {
+      var message = 'An error occured,please check your credintials';
+      if (err.message != null) {
+        message = err.message!;
+      }
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screensize = MediaQuery.of(context).size;
@@ -30,7 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
             left: -30,
           ),
           Centerwidget(size: screensize),
-          Logincontent(),
+          Logincontent(
+            submit: _subimitAuthData,
+          ),
         ],
       ),
     );
