@@ -13,7 +13,7 @@ class TopText extends StatefulWidget {
 class _TopTextState extends State<TopText> {
   @override
   void initState() {
-    ChangeScreenAnimations.toptextanimations.addStatusListener((status) {
+    ChangeScreenAnimations.toptextanimations!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {});
       }
@@ -24,7 +24,7 @@ class _TopTextState extends State<TopText> {
   @override
   Widget build(BuildContext context) {
     return HellperFunctions.wrapwithAnimationBuilder(
-      animation: ChangeScreenAnimations.toptextanimations,
+      animation: ChangeScreenAnimations.toptextanimations!,
       child: Text(
         ChangeScreenAnimations.currentScreen == Screens.createAccount
             ? 'Create\nAccount'

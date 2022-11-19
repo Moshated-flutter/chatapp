@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 class ChangeScreenAnimations {
   static var isplaying = false;
   static var currentScreen = Screens.createAccount;
-  static late final AnimationController toptextconroller;
-  static late final Animation<Offset> toptextanimations;
-  static late final AnimationController bottomtextconroller;
-  static late final Animation<Offset> bottomtextanimations;
+  static AnimationController? toptextconroller;
+  static Animation<Offset>? toptextanimations;
+  static AnimationController? bottomtextconroller;
+  static Animation<Offset>? bottomtextanimations;
 
-  static final List<AnimationController> createaccountController = [];
-  static final List<Animation<Offset>> createAccountAnimation = [];
-  static final List<AnimationController> loginController = [];
-  static final List<Animation<Offset>> loginAnimation = [];
+  static List<AnimationController> createaccountController = [];
+  static List<Animation<Offset>> createAccountAnimation = [];
+  static List<AnimationController> loginController = [];
+  static List<Animation<Offset>> loginAnimation = [];
 
   static Animation<Offset> _createanimation({
     required Offset begin,
@@ -40,7 +40,7 @@ class ChangeScreenAnimations {
     toptextanimations = _createanimation(
       begin: Offset.zero,
       end: const Offset(-1.8, 0),
-      parent: toptextconroller,
+      parent: toptextconroller!,
     );
     bottomtextconroller = AnimationController(
       vsync: vsync,
@@ -49,7 +49,7 @@ class ChangeScreenAnimations {
     bottomtextanimations = _createanimation(
       begin: Offset.zero,
       end: const Offset(0, 1.7),
-      parent: bottomtextconroller,
+      parent: bottomtextconroller!,
     );
     for (var i = 0; i < createaccontItems; i++) {
       createaccountController.add(AnimationController(
@@ -86,29 +86,29 @@ class ChangeScreenAnimations {
       ...createaccountController,
       ...loginController,
     ]) {
-      controller.dispose();
+      controller!.dispose();
     }
   }
 
   static Future<void> forward() async {
     isplaying = true;
-    toptextconroller.forward();
-    await bottomtextconroller.forward();
+    toptextconroller!.forward();
+    await bottomtextconroller!.forward();
     for (final controller in [...createaccountController, ...loginController]) {
       controller.forward();
       await Future.delayed(const Duration(milliseconds: 50));
     }
 
-    bottomtextconroller.reverse();
-    await toptextconroller.reverse();
+    bottomtextconroller!.reverse();
+    await toptextconroller!.reverse();
 
     isplaying = false;
   }
 
   static Future<void> reverse() async {
     isplaying = true;
-    toptextconroller.forward();
-    await bottomtextconroller.forward();
+    toptextconroller!.forward();
+    await bottomtextconroller!.forward();
     for (final controller in [
       ...loginController.reversed,
       ...createaccountController.reversed,
@@ -117,8 +117,8 @@ class ChangeScreenAnimations {
       await Future.delayed(const Duration(milliseconds: 50));
     }
 
-    bottomtextconroller.reverse();
-    await toptextconroller.reverse();
+    bottomtextconroller!.reverse();
+    await toptextconroller!.reverse();
 
     isplaying = false;
   }

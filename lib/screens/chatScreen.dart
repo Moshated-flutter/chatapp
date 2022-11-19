@@ -1,50 +1,62 @@
+import 'package:chatapp/widgets/chats/masseges.dart';
+import 'package:chatapp/widgets/chats/new_message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text('main chat screen'),
-      ),
-      body: StreamBuilder(
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.builder(
-            itemBuilder: (context, index) => Container(
-              margin: EdgeInsets.all(15),
-              child: Center(
-                  child: Text(
-                snapshot.data!.docs[index]['text'],
-                style: TextStyle(fontSize: 15),
-              )),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Theme.of(context).cardColor,
-                border: Border.all(
-                  width: 1,
-                  color: Colors.white,
+        title: Text('chat screen'),
+        actions: [
+          DropdownButton(
+            elevation: 0,
+            underline: null,
+            borderRadius: BorderRadius.zero,
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            items: [
+              DropdownMenuItem(
+                value: 'logout',
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.exit_to_app,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(width: 5),
+                      Text('Log Out'),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            itemCount: snapshot.data!.docs.length,
-          );
-        },
-        stream: FirebaseFirestore.instance
-            .collection('Chats/Nb9e0vuGxcUFsfZZZjcr/Massages')
-            .snapshots(),
+            ],
+            onChanged: (value) {
+              if (value == 'logout') {
+                // ChangeScreenAnimations.currentScreen = Screens.createAccount;
+                FirebaseAuth.instance.signOut();
+              }
+            },
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
+      body: Column(
+        children: [
+          Expanded(child: Massages()),
+          NewMessages(),
+        ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }

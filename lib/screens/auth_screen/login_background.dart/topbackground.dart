@@ -9,7 +9,7 @@ Widget topbackgroundwidget(double screenwidth) {
       height: 1.2 * screenwidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(150),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment(-0.2, -0.8),
           end: Alignment.bottomCenter,
           colors: [

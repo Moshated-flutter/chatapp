@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:chatapp/screens/auth_screen/animations/change_screen_animation.dart';
 import 'package:chatapp/screens/auth_screen/components/text_widgets/bottom_text.dart';
 import 'package:chatapp/screens/auth_screen/components/text_widgets/toptext.dart';
@@ -11,10 +13,17 @@ enum Screens {
 }
 
 class Logincontent extends StatefulWidget {
-  final void Function(String email, String password, String username,
-      bool islogin, BuildContext ctx) submit;
+  final void Function(
+    String email,
+    String password,
+    String username,
+    bool islogin,
+    BuildContext ctx,
+  ) submit;
+  final bool loadingindicator;
 
-  Logincontent({required this.submit, super.key});
+  Logincontent(
+      {required this.submit, required this.loadingindicator, super.key});
 
   @override
   State<Logincontent> createState() => _LogincontentState();
@@ -37,19 +46,37 @@ class _LogincontentState extends State<Logincontent>
 
   @override
   void initState() {
+    Future.delayed(Duration.zero);
     createAccountcontent = [
       inputField('Name', Icons.person, false, formkeyUser),
       inputField('Email', Icons.mail_outline, false, formkeyEmialSign),
       inputField('Password', Icons.key_rounded, true, formkeyPasswordSing),
-      loginbuttom('sign in'),
-      ordivider(),
-      logos(),
+      if (!widget.loadingindicator) loginbuttom('sign in'),
+      if (widget.loadingindicator)
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 180,
+          ),
+          child: CircularProgressIndicator(),
+        ),
+      if (!widget.loadingindicator) ordivider(),
+      if (!widget.loadingindicator)
+        if (!widget.loadingindicator) logos(),
     ];
     logincontent = [
       inputField('Email', Icons.mail_outline, false, formkeyEmialLog),
       inputField('Password', Icons.key_rounded, true, formkeyPasswordLog),
-      loginbuttom('Log in'),
-      forgetpassword(),
+      if (!widget.loadingindicator) loginbuttom('Log in'),
+      if (widget.loadingindicator)
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 180,
+          ),
+          child: CircularProgressIndicator(),
+        ),
+      if (!widget.loadingindicator) forgetpassword(),
     ];
     ChangeScreenAnimations.initialze(
       createaccontItems: createAccountcontent.length,
@@ -75,7 +102,7 @@ class _LogincontentState extends State<Logincontent>
 
   @override
   void dispose() {
-    ChangeScreenAnimations.dispose();
+    // ChangeScreenAnimations.dispose();
     super.dispose();
   }
 
@@ -163,13 +190,13 @@ class _LogincontentState extends State<Logincontent>
                 vertical: 12,
               ),
               child: Container(
-                padding: EdgeInsets.only(left: 15),
+                padding: const EdgeInsets.only(left: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Name',
                     prefixIcon: Icon(Icons.person),
@@ -180,13 +207,13 @@ class _LogincontentState extends State<Logincontent>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
             child: Container(
-              padding: EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 15),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(50),
               ),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Email',
                   prefixIcon: Icon(Icons.email_outlined),
@@ -197,13 +224,13 @@ class _LogincontentState extends State<Logincontent>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
             child: Container(
-              padding: EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 15),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(50),
               ),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Password',
                   prefixIcon: Icon(Icons.key),
@@ -245,13 +272,16 @@ class _LogincontentState extends State<Logincontent>
             }
           }
         },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: ksecondacycolor,
+          shape: const StadiumBorder(),
+        ),
         child: Text(
           title,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: ksecondacycolor,
-          shape: const StadiumBorder(),
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
@@ -259,7 +289,7 @@ class _LogincontentState extends State<Logincontent>
 
   Widget ordivider() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 130, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 130, vertical: 8),
       child: Row(
         children: [
           Flexible(
@@ -268,8 +298,8 @@ class _LogincontentState extends State<Logincontent>
               height: 1,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               'or',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -288,12 +318,12 @@ class _LogincontentState extends State<Logincontent>
 
   Widget logos() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset('assets/images/facebook.png'),
-          SizedBox(width: 30),
+          const SizedBox(width: 30),
           Image.asset('assets/images/google.png'),
         ],
       ),
@@ -302,9 +332,9 @@ class _LogincontentState extends State<Logincontent>
 
   Widget forgetpassword() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 110),
+      padding: const EdgeInsets.symmetric(horizontal: 110),
       child: TextButton(
-        child: Text(
+        child: const Text(
           'Forget password',
           style: TextStyle(
               color: ksecondacycolor,
@@ -326,7 +356,7 @@ class _LogincontentState extends State<Logincontent>
           left: 50,
         ),
         Padding(
-          padding: EdgeInsets.only(top: 100),
+          padding: const EdgeInsets.only(top: 100),
           child: Stack(
             children: [
               Column(
@@ -342,7 +372,7 @@ class _LogincontentState extends State<Logincontent>
             ],
           ),
         ),
-        Align(
+        const Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(bottom: 10),

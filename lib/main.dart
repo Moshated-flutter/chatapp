@@ -1,7 +1,9 @@
 import 'package:chatapp/screens/auth_screen/login_screen.dart';
+import 'package:chatapp/screens/chatScreen.dart';
 import 'package:chatapp/screens/loadingScreen.dart';
 import 'package:chatapp/utils/constrans.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
@@ -28,10 +30,18 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return LoginScreen(isloading: false);
-          }
           if (snapshot.connectionState == ConnectionState.done) {
+            return StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (BuildContext context, AsyncSnapshot snapshotstream) {
+                if (snapshotstream.hasData) {
+                  return new ChatScreen();
+                }
+                return new LoginScreen(isloading: false);
+              },
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return LoginScreen(
               isloading: true,
             );

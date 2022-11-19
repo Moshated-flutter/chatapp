@@ -14,7 +14,7 @@ class BottomText extends StatefulWidget {
 class _BottomTextState extends State<BottomText> {
   @override
   void initState() {
-    ChangeScreenAnimations.bottomtextanimations.addStatusListener((status) {
+    ChangeScreenAnimations.bottomtextanimations!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {});
       }
@@ -25,7 +25,7 @@ class _BottomTextState extends State<BottomText> {
   @override
   Widget build(BuildContext context) {
     return HellperFunctions.wrapwithAnimationBuilder(
-      animation: ChangeScreenAnimations.bottomtextanimations,
+      animation: ChangeScreenAnimations.bottomtextanimations!,
       child: Container(
         child: GestureDetector(
           onTap: () {
