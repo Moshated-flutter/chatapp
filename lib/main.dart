@@ -1,5 +1,8 @@
+import 'package:chatapp/screens/auth_screen/animations/change_screen_animation.dart';
+import 'package:chatapp/screens/auth_screen/components/login_content.dart';
 import 'package:chatapp/screens/auth_screen/login_screen.dart';
 import 'package:chatapp/screens/chatScreen.dart';
+import 'package:chatapp/screens/imageprofile/image_sceen.dart';
 import 'package:chatapp/screens/loadingScreen.dart';
 import 'package:chatapp/utils/constrans.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,12 +11,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
+  static bool newAccount = false;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -35,20 +39,25 @@ class MyApp extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (BuildContext context, AsyncSnapshot snapshotstream) {
                 if (snapshotstream.hasData) {
+                  if (newAccount) {
+                    return ImageScreen();
+                  }
                   return new ChatScreen();
                 }
                 return new LoginScreen(isloading: false);
               },
             );
           }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return LoginScreen(
-              isloading: true,
-            );
-          }
-          return LoadingScreen();
+
+          return LoginScreen(
+            isloading: true,
+          );
         },
       ),
+      routes: {
+        ChatScreen.routename: (context) => ChatScreen(),
+        ImageScreen.routename: (context) => ImageScreen(),
+      },
     );
   }
 }

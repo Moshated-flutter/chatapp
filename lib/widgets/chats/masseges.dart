@@ -20,11 +20,11 @@ class Massages extends StatelessWidget {
         return ListView.builder(
           reverse: true,
           itemBuilder: (context, index) => Messagebubble(
-            snapshot.data!.docs[index]['text'],
-            snapshot.data!.docs[index]['userID'] == user!.uid,
-            ValueKey(snapshot.data!.docs[index].id),
-            snapshot.data!.docs[index]['username'],
-          ),
+              snapshot.data!.docs[index]['text'],
+              snapshot.data!.docs[index]['userID'] == user!.uid,
+              ValueKey(snapshot.data!.docs[index].id),
+              snapshot.data!.docs[index]['username'],
+              snapshot.data!.docs[index]['userImage']),
           itemCount: snapshot.data!.docs.length,
         );
       },

@@ -26,7 +26,8 @@ class _NewMessagesState extends State<NewMessages> {
         'text': _enteredMessages,
         'datetime': Timestamp.now(),
         'userID': user.uid,
-        'username': userdata['username']
+        'username': userdata['username'],
+        'userImage': userdata['imageUrl'],
       },
     );
     setState(() {

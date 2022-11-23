@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:chatapp/main.dart';
 import 'package:chatapp/screens/auth_screen/animations/change_screen_animation.dart';
 import 'package:chatapp/screens/auth_screen/components/text_widgets/bottom_text.dart';
 import 'package:chatapp/screens/auth_screen/components/text_widgets/toptext.dart';
+import 'package:chatapp/screens/imageprofile/image_sceen.dart';
 import 'package:chatapp/utils/constrans.dart';
 import 'package:chatapp/utils/helper_funtions.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,7 @@ enum Screens {
 }
 
 class Logincontent extends StatefulWidget {
-  final void Function(
+  final Future Function(
     String email,
     String password,
     String username,
@@ -247,7 +249,7 @@ class _LogincontentState extends State<Logincontent>
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 154, vertical: 16),
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           FocusScope.of(context).unfocus();
           if (ChangeScreenAnimations.currentScreen == Screens.createAccount) {
             final emailValid = formkeyEmialSign.currentState!.validate();
@@ -258,7 +260,13 @@ class _LogincontentState extends State<Logincontent>
               formkeyPasswordSing.currentState!.save();
               formkeyUser.currentState!.save();
               widget.submit(
-                  _useremail, _userpassword, _username, false, context);
+                _useremail,
+                _userpassword,
+                _username,
+                false,
+                context,
+              );
+              MyApp.newAccount = true;
             }
           }
           if (ChangeScreenAnimations.currentScreen == Screens.login) {
@@ -268,7 +276,13 @@ class _LogincontentState extends State<Logincontent>
               formkeyEmialLog.currentState!.save();
               formkeyPasswordLog.currentState!.save();
               widget.submit(
-                  _useremail, _userpassword, _username, true, context);
+                _useremail,
+                _userpassword,
+                _username,
+                true,
+                context,
+              );
+              MyApp.newAccount = false;
             }
           }
         },

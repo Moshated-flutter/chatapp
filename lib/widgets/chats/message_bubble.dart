@@ -5,14 +5,20 @@ class Messagebubble extends StatelessWidget {
   final String message;
   final Key messagekey;
   final String userName;
+  final String imageurl;
 
-  Messagebubble(this.message, this.isme, this.messagekey, this.userName);
+  Messagebubble(
+      this.message, this.isme, this.messagekey, this.userName, this.imageurl);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: isme ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
+        if (!isme)
+          CircleAvatar(
+            backgroundImage: NetworkImage(imageurl),
+          ),
         Container(
           margin: const EdgeInsets.all(15),
           padding: const EdgeInsets.all(15),
@@ -53,6 +59,10 @@ class Messagebubble extends StatelessWidget {
             ],
           ),
         ),
+        if (isme)
+          CircleAvatar(
+            backgroundImage: NetworkImage(imageurl),
+          ),
       ],
     );
   }

@@ -20,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var _isloading = false;
-  void _subimitAuthData(
+  Future<void> _subimitAuthData(
     String email,
     String password,
     String username,

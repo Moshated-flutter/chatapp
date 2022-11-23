@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
+  static const routename = '/chatscreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +42,7 @@ class ChatScreen extends StatelessWidget {
             onChanged: (value) {
               if (value == 'logout') {
                 // ChangeScreenAnimations.currentScreen = Screens.createAccount;
+
                 FirebaseAuth.instance.signOut();
               }
             },
