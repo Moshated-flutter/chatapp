@@ -1,3 +1,4 @@
+import 'package:chatapp/firebase_options.dart';
 import 'package:chatapp/screens/auth_screen/animations/change_screen_animation.dart';
 import 'package:chatapp/screens/auth_screen/components/login_content.dart';
 import 'package:chatapp/screens/auth_screen/login_screen.dart';
@@ -32,7 +33,9 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Montserrat',
           cardColor: Colors.grey[100]),
       home: FutureBuilder(
-        future: Firebase.initializeApp(),
+        future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return StreamBuilder(
